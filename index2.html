@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quét QR & Xuất Excel</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.7/html5-qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    #reader {
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Ứng dụng Quét QR & Xuất Excel</h2>
+
+  <div id="reader"></div>
+
+  <table id="qrTable">
+    <thead>
+      <tr><th>#</th><th>Nội dung QR</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportToExcel()">📥 Xuất Excel</button>
+
+  <script>
+    let qrCount = 0;
+
+    function onScanSuccess(decodedText) {
+      if (!decodedText) return;
+
+      // Tránh quét trùng liên tục
+      const existingTexts = Array.from(document.querySelectorAll("#qrTable tbody td:nth-child(2)"))
+        .map(td => td.textContent.trim());
+      if (existingTexts.includes(decodedText.trim())) return;
+
+      qrCount++;
+      const table = document.getElementById("qrTable").getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+      newRow.insertCell(0).textContent = qrCount;
+      newRow.insertCell(1).textContent = decodedText;
+    }
+
+    const html5QrCode = new Html5Qrcode("reader");
+    Html5Qrcode.getCameras().then(devices => {
+      if (devices && devices.length) {
+        html5QrCode.start(
+          { facingMode: "environment" }, // dùng camera sau
+          {
+            fps: 10,
+            qrbox: 250
+          },
+          onScanSuccess
+        );
+      }
+    }).catch(err => {
+      console.error("Lỗi khi truy cập camera:", err);
+    });
+
+    function exportToExcel() {
+      const table = document.getElementById("qrTable");
+      const wb = XLSX.utils.table_to_book(table, { sheet: "QR List" });
+      XLSX.writeFile(wb, "Danh_sach_QR.xlsx");
+    }
+  </script>
+
+</body>
+</html>
