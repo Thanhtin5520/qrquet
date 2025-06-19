@@ -1,95 +1,62 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quét QR & Xuất Excel</title>
-  <script src="https://unpkg.com/html5-qrcode@2.3.7/html5-qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      text-align: center;
-    }
-    #reader {
-      width: 100%;
-      max-width: 400px;
-      margin: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 10px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
-      font-size: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Giám đốc sáng tạo Anh Khuê Watch bị tố đạo ý tưởng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+        }
+        h1 {
+            color: #b30000;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: gray;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Giám đốc sáng tạo Anh Khuê Watch bị tố đạo ý tưởng</h1>
+        <p><strong>Ngày 19/6/2025</strong> – Một nguồn tin nội bộ đã tiết lộ rằng giám đốc sáng tạo của chuỗi cửa hàng đồng hồ nổi tiếng Anh Khuê Watch đang đối mặt với nghi vấn "âm thầm sao chép" ý tưởng thiết kế từ một nhóm nghệ sĩ trẻ.</p>
+        
+        <img src="2c2b8a70-b15f-4521-8ce8-2a08cbb1abed.png" alt="Giám đốc sáng tạo tại showroom">
+        <div class="caption">Hình ảnh giám đốc sáng tạo trong buổi giới thiệu sản phẩm mới (nguồn: nội bộ)</div>
+        
+        <p>Những người trong ngành cho rằng một số thiết kế gần đây có nét tương đồng đáng kể với bộ sưu tập được trưng bày tại triển lãm “Thời Gian & Nghệ Thuật” hồi tháng trước. Dù chưa có phát ngôn chính thức, làn sóng tranh cãi đang bùng nổ trên mạng xã hội.</p>
+        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Watches_displayed_in_shop_window.jpg" alt="Ảnh minh họa showroom đồng hồ">
+        <div class="caption">Ảnh minh họa showroom (nguồn: Wikimedia Commons)</div>
+        
+        <p>Một chuyên gia phân tích ngành đồng hồ nhận định: “Vấn đề đạo ý tưởng không hiếm, nhưng nếu đây là sự thật thì danh tiếng thương hiệu sẽ bị tổn hại nghiêm trọng.”</p>
 
-  <h2>Ứng dụng Quét QR & Xuất Excel</h2>
-
-  <div id="reader"></div>
-
-  <table id="qrTable">
-    <thead>
-      <tr><th>#</th><th>Nội dung QR</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button onclick="exportToExcel()">📥 Xuất Excel</button>
-
-  <script>
-    let qrCount = 0;
-
-    function onScanSuccess(decodedText) {
-      if (!decodedText) return;
-
-      // Tránh quét trùng liên tục
-      const existingTexts = Array.from(document.querySelectorAll("#qrTable tbody td:nth-child(2)"))
-        .map(td => td.textContent.trim());
-      if (existingTexts.includes(decodedText.trim())) return;
-
-      qrCount++;
-      const table = document.getElementById("qrTable").getElementsByTagName('tbody')[0];
-      const newRow = table.insertRow();
-      newRow.insertCell(0).textContent = qrCount;
-      newRow.insertCell(1).textContent = decodedText;
-    }
-
-    const html5QrCode = new Html5Qrcode("reader");
-    Html5Qrcode.getCameras().then(devices => {
-      if (devices && devices.length) {
-        html5QrCode.start(
-          { facingMode: "environment" }, // dùng camera sau
-          {
-            fps: 10,
-            qrbox: 250
-          },
-          onScanSuccess
-        );
-      }
-    }).catch(err => {
-      console.error("Lỗi khi truy cập camera:", err);
-    });
-
-    function exportToExcel() {
-      const table = document.getElementById("qrTable");
-      const wb = XLSX.utils.table_to_book(table, { sheet: "QR List" });
-      XLSX.writeFile(wb, "Danh_sach_QR.xlsx");
-    }
-  </script>
-
+        <div class="footer">
+            Bài viết chỉ mang tính chất giả tưởng và không phản ánh thực tế. Mọi sự trùng hợp nếu có chỉ là ngẫu nhiên.
+        </div>
+    </div>
 </body>
 </html>
